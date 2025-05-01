@@ -1,0 +1,260 @@
+:root {
+    --primary: #4285f4;
+    --primary-dark: #3367d6;
+    --secondary: #34a853;
+    --disabled: #e0e0e0;
+    --text: #333333;
+    --border: #e0e0e0;
+    --success: #4CAF50;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: #f8f9fa;
+}
+
+.login-card {
+    position: relative;
+    width: 320px;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.zkp-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--success);
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.875rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.btn {
+    width: 100%;
+    padding: 0.875rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #f0f5ff;
+}
+
+.btn-secondary:disabled {
+    background: white;
+    color: var(--disabled);
+    border-color: var(--disabled);
+    cursor: not-allowed;
+}
+
+/* Add these new styles to your existing CSS */
+.auth-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.auth-card {
+    display: none;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card.active {
+    display: block;
+}
+
+.auth-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: #666;
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Update existing styles for consistency */
+.zkp-loading,
+#regLoading {
+    display: none;
+    background: rgba(66, 133, 244, 0.9);
+    color: white;
+    padding: 12px;
+    text-align: center;
+    margin-top: 1rem;
+    border-radius: 4px;
+}
+
+.error-message,
+#regError {
+    display: none;
+    color: #d32f2f;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border: 1px solid #d32f2f;
+    border-radius: 4px;
+    background: rgba(211, 47, 47, 0.05);
+}
+
+.pm-icon::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11V11.99z"/></svg>');
+}
+
+.divider {
+    margin: 1.5rem 0;
+    border-top: 1px solid #eee;
+    position: relative;
+    text-align: center;
+}
+
+.divider::after {
+    content: attr(data-text);
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 0 1rem;
+    color: #888;
+    font-size: 0.875rem;
+}
+
+.credential-selector-container {
+    margin-bottom: 1rem;
+}
+
+.credential-selector {
+    width: 100%;
+    padding: 0.875rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+}
+
+.zkp-loading {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(66, 133, 244, 0.9);
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: 500;
+    z-index: 1000;
+}
+
+:root {
+    --primary: #4285f4;
+    --error: #d32f2f;
+}
+
+.login-card {
+    position: relative;
+}
+
+#errorDisplay {
+    display: none;
+    color: var(--error);
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border: 1px solid var(--error);
+    border-radius: 4px;
+}
+
+.zkp-loading {
+    display: none;
+    background: rgba(66, 133, 244, 0.9);
+    color: white;
+    padding: 12px;
+    text-align: center;
+    margin-top: 1rem;
+    border-radius: 4px;
+}
+
+.error-message {
+    color: #d32f2f;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #d32f2f;
+    border-radius: 4px;
+    display: none;
+}
+
+.btn-secondary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.pm-icon::before {
+    content: "🔒";
+    margin-right: 5px;
+}

@@ -1,29 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secure Login</title>
-  <link rel="stylesheet" href="demo.css">
-</head>
-<body>
-  <div class="login-card">
-    <h1>Welcome Back</h1>
-    <div id="credentialSelector"></div>
-    
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Username or email" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit" class="btn btn-primary">Sign In</button>
-    </form>
-    
-    <div class="divider"></div>
-    
-    <button id="pmSignIn" class="btn btn-secondary" disabled>
-      Sign in with Password Manager
-    </button>
-  </div>
 
-  <script src="demo.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login with ZKP</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <!-- Login Card (Default View) -->
+        <div id="loginCard" class="auth-card active">
+            <div class="zkp-badge">Zero-Knowledge Proof Enabled</div>
+            <h1>Welcome Back</h1>
+
+            <div id="credentialSelector" class="credential-selector-container"></div>
+
+            <form id="loginForm" class="auth-form">
+                <input type="text" id="username" placeholder="Username or email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+
+            <div class="divider">or</div>
+
+            <button id="pmSignIn" class="btn btn-secondary" disabled>
+                <span class="pm-icon"></span>
+                Sign in with Password Manager
+            </button>
+
+            <div class="auth-footer">
+                Don't have an account? <a href="#" id="showRegister">Register</a>
+            </div>
+
+            <div id="zkpLoading" class="zkp-loading">Verifying with Zero-Knowledge Proof...</div>
+            <div id="errorDisplay" class="error-message"></div>
+        </div>
+
+        <!-- Registration Card (Hidden by default) -->
+        <div id="registerCard" class="auth-card">
+            <h1>Create Account</h1>
+
+            <form id="registerForm" class="auth-form">
+                <input type="text" id="regUsername" placeholder="Username" required>
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <input type="password" id="regPassword" placeholder="Password" required>
+                <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+
+            <div class="auth-footer">
+                Already have an account? <a href="#" id="showLogin">Sign In</a>
+            </div>
+
+            <div id="regLoading" class="zkp-loading">Creating secure account...</div>
+            <div id="regError" class="error-message"></div>
+        </div>
+    </div>
+
+    <script src="scripts/passwordmanager.js" type="module"></script>
+    <script src="scripts/zkp.js" type="module"></script>
+    <script src="scripts/auth.js" type="module"></script>
 </body>
+
 </html>

@@ -20,12 +20,12 @@ export const generateZKProof = async (password, challenge) => {
 export const handleZKPLogin = async (username, password) => {
     try {
         // Get challenge
-        const res = await fetch(`http://localhost:5000/api/zkp/challenge?username=${encodeURIComponent(username)}`)
+        const res = await fetch(`https://zkpbackend.onrender.com/api/zkp/challenge?username=${encodeURIComponent(username)}`)
         if (!res.ok) throw new Error(await res.text())
         const { challenge } = await res.json()
 
         // Verify proof
-        const verifyRes = await fetch('http://localhost:5000/api/zkp/verify', {
+        const verifyRes = await fetch('https://zkpbackend.onrender.com/api/zkp/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -50,7 +50,7 @@ export const handleZKPLogin = async (username, password) => {
 
 export async function fallbackTraditionalLogin(username, password) {
     try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
+        const response = await fetch('https://zkpbackend.onrender.com/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
@@ -73,7 +73,7 @@ export async function fallbackTraditionalLogin(username, password) {
 export async function registerUser(username, email, password) {
     try {
         // Traditional registration
-        const regResponse = await fetch('http://localhost:5000/api/auth/register', {
+        const regResponse = await fetch('https://zkpbackend.onrender.com/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, email, password })
@@ -90,7 +90,7 @@ export async function registerUser(username, email, password) {
 
         const commitment = await hash(password.trim()); // Just hash the password directly
         
-        const zkpResponse = await fetch('http://localhost:5000/api/zkp/register', {
+        const zkpResponse = await fetch('https://zkpbackend.onrender.com/api/zkp/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, commitment })

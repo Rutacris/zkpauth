@@ -48,7 +48,7 @@ function setupEventListeners() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     username,
-                    "METHOD":"NORMAL",
+                    "METHOD": "NORMAL",
                     success,
                     duration,
                     error,

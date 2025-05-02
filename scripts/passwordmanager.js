@@ -6,6 +6,7 @@ export function initializePasswordManager() {
   if (!('PasswordCredential' in window)) {
     pmButton.disabled = true;
     pmButton.title = "Password manager not supported in your browser";
+    showError('W3C credential management is not supported on this browser', 'errorDisplay');
     return;
   }
 

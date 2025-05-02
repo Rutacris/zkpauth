@@ -37,8 +37,7 @@ export function initializePasswordManager() {
 
       }
     } catch (error) {
-      // console.error('Password Manager error:', error);
-      showError('Password manager error', 'errorDisplay');
+      showError('Password manager error:' + error, 'errorDisplay');
     }
   });
 }

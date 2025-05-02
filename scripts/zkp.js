@@ -13,7 +13,7 @@ const hash = async data => {
 
 export const generateZKProof = async (password, challenge) => {
     const commitment = await hash(password.trim()) // Add trim
-    console.log(`${commitment.trim()}:${challenge.trim()}`);
+    // console.log(`${commitment.trim()}:${challenge.trim()}`);
     return await hash(`${commitment.trim()}:${challenge.trim()}`) // Add trim
 }
 
@@ -43,7 +43,7 @@ export const handleZKPLogin = async (username, password) => {
         return { success: true }
 
     } catch (error) {
-        console.error('Login failed:', error)
+        // console.error('Login failed:', error)
         return { success: false, error: error.message }
     }
 }
@@ -65,7 +65,7 @@ export async function fallbackTraditionalLogin(username, password) {
         }
         return { success: false };
     } catch (error) {
-        console.error('Traditional login failed:', error);
+        // console.error('Traditional login failed:', error);
         return { success: false, error: error.message };
     }
 }
@@ -101,7 +101,7 @@ export async function registerUser(username, email, password) {
 
         return { success: true, message: 'Registration successful' };
     } catch (error) {
-        console.error('Registration error:', error);
+        // console.error('Registration error:', error);
         return { success: false, message: error.message };
     }
 }

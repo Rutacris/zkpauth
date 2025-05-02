@@ -23,20 +23,20 @@ function setupEventListeners() {
     // Login form
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        showLoading('zkpLoading');
+        // showLoading('zkpLoading');
 
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
         try {
             // First login
-            let { success } = await fallbackTraditionalLogin(username, password);
+            let { success, error } = await fallbackTraditionalLogin(username, password);
             
 
             if (success) {
                 window.location.href = '/dashboard.html';
             } else {
-                showError('Authentication failed', 'errorDisplay');
+                showError('Authentication failed: '+error, 'errorDisplay');
             }
         } catch (error) {
             showError(error.message || 'Login failed', 'errorDisplay');

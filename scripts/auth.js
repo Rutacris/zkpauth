@@ -1,5 +1,6 @@
 import { initializePasswordManager, storeCredentials } from './passwordmanager.js';
 import { handleZKPLogin, fallbackTraditionalLogin, registerUser } from './zkp.js';
+import { logAuthAttempt } from '../utils/logger.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initializePasswordManager();
@@ -24,23 +25,37 @@ function setupEventListeners() {
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         // showLoading('zkpLoading');
-
+        const startTime = Date.now();
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
         try {
             // First login
             let { success, error } = await fallbackTraditionalLogin(username, password);
-            
+
 
             if (success) {
                 window.location.href = '/dashboard.html';
             } else {
-                showError('Authentication failed: '+error, 'errorDisplay');
+                showError('Authentication failed: ' + error, 'errorDisplay');
             }
         } catch (error) {
             showError(error.message || 'Login failed', 'errorDisplay');
         } finally {
+            const duration = Date.now() - startTime;
+            // Send log to server
+            await fetch('https://zkpbackend.onrender.com/api/log-auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username,
+                    "METHOD":"NORMAL",
+                    success,
+                    duration,
+                    error,
+                    timestamp: new Date().toISOString()
+                })
+            });
             hideLoading('zkpLoading');
         }
     });
@@ -74,6 +89,7 @@ function setupEventListeners() {
         } catch (error) {
             showError(error.message || 'Registration error', 'regError');
         } finally {
+
             hideLoading('regLoading');
         }
     });

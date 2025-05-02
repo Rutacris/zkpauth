@@ -2,101 +2,97 @@ import { initializePasswordManager, storeCredentials } from './passwordmanager.j
 import { handleZKPLogin, fallbackTraditionalLogin, registerUser } from './zkp.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  initializePasswordManager();
-  setupEventListeners();
+    initializePasswordManager();
+    setupEventListeners();
 });
 
 function setupEventListeners() {
-  // Login/Register toggle
-  document.getElementById('showRegister').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('loginCard').classList.remove('active');
-    document.getElementById('registerCard').classList.add('active');
-  });
+    // Login/Register toggle
+    document.getElementById('showRegister').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('loginCard').classList.remove('active');
+        document.getElementById('registerCard').classList.add('active');
+    });
 
-  document.getElementById('showLogin').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('registerCard').classList.remove('active');
-    document.getElementById('loginCard').classList.add('active');
-  });
+    document.getElementById('showLogin').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('registerCard').classList.remove('active');
+        document.getElementById('loginCard').classList.add('active');
+    });
 
-  // Login form
-  document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    showLoading('zkpLoading');
-    
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    try {
-      // First try ZKP login
-      let { success } = await handleZKPLogin(username, password);
-      
-      if (!success) {
-        // Fallback to traditional login
-        ({ success } = await fallbackTraditionalLogin(username, password));
-      }
-      
-      if (success) {
-        window.location.href = '/dashboard.html';
-      } else {
-        showError('Authentication failed', 'errorDisplay');
-      }
-    } catch (error) {
-      showError(error.message || 'Login failed', 'errorDisplay');
-    } finally {
-      hideLoading('zkpLoading');
-    }
-  });
+    // Login form
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        showLoading('zkpLoading');
 
-  // Registration form
-  document.getElementById('registerForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    showLoading('regLoading');
-    
-    const username = document.getElementById('regUsername').value;
-    const email = document.getElementById('regEmail').value;
-    const password = document.getElementById('regPassword').value;
-    const confirmPassword = document.getElementById('regConfirmPassword').value;
-    
-    try {
-      if (password !== confirmPassword) {
-        throw new Error('Passwords do not match');
-      }
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
-      const { success, message } = await registerUser(username, email, password);
-      
-      if (success) {
-        // Auto-login after registration
-        const loginResult = await handleZKPLogin(username, password);
-        if (loginResult.success) {
-          window.location.href = '/dashboard.html';
+        try {
+            // First login
+            let { success } = await fallbackTraditionalLogin(username, password);
+            
+
+            if (success) {
+                window.location.href = '/dashboard.html';
+            } else {
+                showError('Authentication failed', 'errorDisplay');
+            }
+        } catch (error) {
+            showError(error.message || 'Login failed', 'errorDisplay');
+        } finally {
+            hideLoading('zkpLoading');
         }
-      } else {
-        showError(message || 'Registration failed', 'regError');
-      }
-    } catch (error) {
-      showError(error.message || 'Registration error', 'regError');
-    } finally {
-      hideLoading('regLoading');
-    }
-  });
+    });
+
+    // Registration form
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        showLoading('regLoading');
+
+        const username = document.getElementById('regUsername').value;
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+        try {
+            if (password !== confirmPassword) {
+                throw new Error('Passwords do not match');
+            }
+
+            const { success, message } = await registerUser(username, email, password);
+
+            if (success) {
+                // Auto-login after registration
+                const loginResult = await handleZKPLogin(username, password);
+                if (loginResult.success) {
+                    window.location.href = '/dashboard.html';
+                }
+            } else {
+                showError(message || 'Registration failed', 'regError');
+            }
+        } catch (error) {
+            showError(error.message || 'Registration error', 'regError');
+        } finally {
+            hideLoading('regLoading');
+        }
+    });
 }
 
 function showLoading(elementId) {
-  const element = document.getElementById(elementId);
-  if (element) element.style.display = 'block';
+    const element = document.getElementById(elementId);
+    if (element) element.style.display = 'block';
 }
 
 function hideLoading(elementId) {
-  const element = document.getElementById(elementId);
-  if (element) element.style.display = 'none';
+    const element = document.getElementById(elementId);
+    if (element) element.style.display = 'none';
 }
 
 function showError(message, elementId) {
-  const element = document.getElementById(elementId);
-  if (element) {
-    element.textContent = message;
-    element.style.display = 'block';
-  }
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.textContent = message;
+        element.style.display = 'block';
+    }
 }

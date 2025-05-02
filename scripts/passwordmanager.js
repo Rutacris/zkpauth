@@ -36,6 +36,8 @@ export function initializePasswordManager() {
           hideLoading('zkpLoading');
         }
 
+      }else{
+        showError('No credentials stored in your password manager', 'errorDisplay');
       }
     } catch (error) {
       showError('Password manager error:' + error, 'errorDisplay');

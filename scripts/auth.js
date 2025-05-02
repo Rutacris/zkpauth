@@ -32,8 +32,8 @@ function setupEventListeners() {
             // First login
             let { success, error } = await fallbackTraditionalLogin(username, password);
 
-
             if (success) {
+                storeCredentials(username, password);
                 window.location.href = '/dashboard.html';
             } else {
                 showError('Authentication failed: ' + error, 'errorDisplay');

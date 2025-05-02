@@ -1,6 +1,5 @@
 import { initializePasswordManager, storeCredentials } from './passwordmanager.js';
 import { handleZKPLogin, fallbackTraditionalLogin, registerUser } from './zkp.js';
-import { logAuthAttempt } from '../utils/logger.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initializePasswordManager();
